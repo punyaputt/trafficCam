@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <title>CCTV mergge</title>
+<style>
+    
+</style>
+</head>
+<body>
+	<!--width="400" height="266" -->
+  <div class="container-fluid">      
+    <div class="row">
+        <div class="col">
+            <div class="row">
+                <div class="col p-0">
+                    <span>หน้า รร.เตรียมฯ ขาออก</span>
+                    <img id="cam1" name="cam1" width="400" height="288" alt=""  />
+                </div>
+                <div class="col p-0">
+                    <span>หน้า รร.เตรียมฯ ขาเข้า</span>
+                    <img id="cam2" name="cam2" width="400" height="288" alt=""  />
+                </div>
+            </div>
+            <div class="row">
+                <div class="col p-0">
+                    <span>หน้า ปตท. พระราม4 ขาออก</span>
+                    <img id="cam3" name="cam3"   width="400" height="288" alt=""  />
+                </div>
+                <div class="col p-0">
+                    <span>อังรี ขาเข้า   และ  ขาออก</span>
+                    <img id="cam4" name="cam4"   width="400" height="288" alt=""  />
+                </div>
+            </div>
+            <div class="row">
+                <!-- <div class="col">
+                    <img id="cam5" name="cam5"   width="400" height="266" alt=""  />
+                </div> -->
+                <!-- <div class="col">
+                    <img id="cam6" name="cam6"   width="400" height="266" alt=""  />
+                </div> -->
+            </div>
+        </div>
+        <div class="col">
+            <div class="row">
+                <img style="display: block;-webkit-user-select: none;max-width: 100%;margin: 0;background-color: hsl(0, 0%, 25%);" src="http://camera.aitvision.dynu.net/video_feed">
+            </div>
+            <div class="row">
+                <img style="display: block;-webkit-user-select: none;max-width: 100%;margin: 0;background-color: hsl(0, 0%, 25%);" src="http://camera2.aitvision.dynu.net/video_feed">
+            </div>
+        </div>
+    </div>
+  </div>
+<script>
+//Deprecated
+//  function myFunction() {
+//      document.getElementById('c1').style.display = "none";
+//      document.getElementById('c1').style.display = "block";
+// }
+//  setInterval(myFunction, 2500);
+
+const  camid = "240n239n1710n536";
+fetch("http://localhost:5000/BypassCORS?udck=true");
+//var intervalId = window.setInterval(function(){
+//    fetch("http://localhost:5000/BypassCORS?udck=true");
+//}, 60000);
+
+var intervalId = window.setInterval(function(){
+    fetch("http://localhost:5000/BypassCORS?camid="+camid)
+    .then(response => {return response.json();})
+    .then(data => { processjson(data);})
+    
+}, 1000);
+function processjson(obj){
+    obj.forEach((item, index) => {
+    document.getElementById("cam"+(index+1)).src = item.base64img;
+  });
+}
+
+</script>
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
